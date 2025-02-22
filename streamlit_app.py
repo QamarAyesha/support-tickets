@@ -76,8 +76,8 @@ st.header("Add a Task")
 with st.form("add_task_form"):
     issue = st.text_area("Describe the task")
     category= st.selectbox("Category", ["Academic", "Co-curricular", "Personal", "Other"])
-    priority = st.selectbox("Priority", ["High", "Medium", "Low"])
     due_date = st.date_input("Due Date", min_value=datetime.today().date())
+    priority = st.selectbox("Priority", ["High", "Medium", "Low"])
     submitted = st.form_submit_button("Submit")
 
 if submitted:
