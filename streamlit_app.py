@@ -40,7 +40,7 @@ if "df" not in st.session_state:
         "Category": np.random.choice(["Academic", "Co-curricular", "Personal", "Other"], size=100),
         "Status": np.random.choice(["Open", "In Progress", "Closed"], size=100),
         "Priority": np.random.choice(["High", "Medium", "Low"], size=100),
-       "Due Date": [
+        "Due Date": [
             (datetime.date(2025, 2, 22) + datetime.timedelta(days=random.randint(0, 182)))  # Fixing the issue with the 'Due Date'
             for _ in range(100)
         ],
