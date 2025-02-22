@@ -152,7 +152,7 @@ for i, category in enumerate(categories):
             color=alt.Color("Priority:N", legend=None),  # Disable legend for this individual pie chart
             tooltip=["Priority:N", "count():Q"]  # Show priority and count in the tooltip
         )
-        .properties(title=f"Task Priorities for {category}")
+        .properties(title=f"Task for {category}")
     )
 
     # Display each chart in a separate column
@@ -183,3 +183,61 @@ priority_combined_plot = (
 
 # Display the combined pie chart with legend below
 st.altair_chart(priority_combined_plot, use_container_width=True, theme="streamlit")
+
+# Show a chart of task status for each category
+st.header("Task Status by Category")
+
+# Create 4 columns for displaying each pie chart
+col1, col2, col3, col4 = st.columns(4)
+
+# List of categories
+categories = st.session_state.df["Category"].unique()
+
+# Pie chart size to ensure consistency
+chart_width = 200
+chart_height = 200
+
+# Loop over each category and display a pie chart for task status in that category
+for i, category in enumerate(categories):
+    category_df = st.session_state.df[st.session_state.df["Category"] == category]
+    
+    # Pie chart for the status distribution in this category (without legend)
+    status_plot = (
+        alt.Chart(category_df)
+        .mark_arc()
+        .encode(
+            theta="count():Q",  # Count the number of tasks per status
+            color=alt.Color("Status:N", legend=None),  # Disable legend for this individual pie chart
+            tooltip=["Status:N", "count():Q"]  # Show status and count in the tooltip
+        )
+        .properties(width=chart_width, height=chart_height, title=f"Task Status for {category}")  # Set the same size for all charts
+    )
+
+    # Display each chart in a separate column
+    if i == 0:
+        col1.altair_chart(status_plot, use_container_width=True, theme="streamlit")
+    elif i == 1:
+        col2.altair_chart(status_plot, use_container_width=True, theme="streamlit")
+    elif i == 2:
+        col3.altair_chart(status_plot, use_container_width=True, theme="streamlit")
+    else:
+        col4.altair_chart(status_plot, use_container_width=True, theme="streamlit")
+
+# Display a combined pie chart for legend display below the graphs
+st.write("##### Task Status Combined (for Legend)")
+status_combined_plot = (
+    alt.Chart(st.session_state.df)
+    .mark_arc()
+    .encode(
+        theta="count():Q",  # Count the number of tasks per status
+        color=alt.Color("Status:N"),  # Enable legend for the combined chart
+        tooltip=["Status:N", "count():Q"]  # Show status and count in the tooltip
+    )
+    .properties(height=200)
+    .configure_legend(
+        orient="bottom", titleFontSize=14, labelFontSize=14, titlePadding=5
+    )
+)
+
+# Display the combined pie chart with legend below
+st.altair_chart(status_combined_plot, use_container_width=True, theme="streamlit")
