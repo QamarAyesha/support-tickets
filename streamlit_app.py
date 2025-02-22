@@ -93,7 +93,9 @@ if submitted:
                 "Category": category,
                 "Status": "Open",
                 "Priority": priority,
+                "Due Date": due_date,
                 "Date Submitted": today,
+                
             }
         ]
     )
