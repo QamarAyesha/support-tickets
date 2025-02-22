@@ -133,30 +133,37 @@ edited_df = st.data_editor(
 # Show a chart of task priorities for each category
 st.header("Task Priorities by Category")
 
-# Loop over each category and display a chart for the task priorities in that category
+# Create 4 columns for displaying each pie chart
+col1, col2, col3, col4 = st.columns(4)
+
+# List of categories
 categories = st.session_state.df["Category"].unique()
-for category in categories:
-    st.subheader(f"Priority Distribution for {category} Tasks")
-    
-    # Filter the dataframe by the category
+
+# Loop over each category and display a pie chart for task priorities in that category
+for i, category in enumerate(categories):
     category_df = st.session_state.df[st.session_state.df["Category"] == category]
     
-    # Create a bar chart for the priority distribution in this category
+    # Pie chart for the priority distribution in this category
     priority_plot = (
         alt.Chart(category_df)
-        .mark_bar()
+        .mark_arc()
         .encode(
-            x="Priority:N",  # Use the "Priority" column
-            y="count():Q",  # Count the number of tasks per priority
+            theta="count():Q",  # Count the number of tasks per priority
             color="Priority:N",  # Color by priority
+            tooltip=["Priority:N", "count():Q"]  # Show priority and count in the tooltip
         )
         .properties(title=f"Task Priorities for {category}")
-        .configure_legend(
-            orient="bottom", titleFontSize=14, labelFontSize=14, titlePadding=5
-        )
     )
-    st.altair_chart(priority_plot, use_container_width=True, theme="streamlit")
-# Show some metrics and charts about the ticket.
+
+    # Display each chart in a separate column
+    if i == 0:
+        col1.altair_chart(priority_plot, use_container_width=True, theme="streamlit")
+    elif i == 1:
+        col2.altair_chart(priority_plot, use_container_width=True, theme="streamlit")
+    elif i == 2:
+        col3.altair_chart(priority_plot, use_container_width=True, theme="streamlit")
+    else:
+        col4.altair_chart(priority_plot, use_container_width=True, theme="streamlit")# Show some metrics and charts about the ticket.
 st.header("Statistics")
 
 # Show metrics side by side using `st.columns` and `st.metric`.
