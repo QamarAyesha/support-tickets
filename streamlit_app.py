@@ -27,28 +27,14 @@ if "df" not in st.session_state:
         "Math Homework",
         "English Essay",
         "Physics Home work",
-        "Email server downtime",
-        "Data backup failure",
-        "Login authentication problems",
-        "Website performance degradation",
-        "Security vulnerability identified",
-        "Hardware malfunction in the server room",
-        "Employee unable to access shared files",
-        "Database connection failure",
-        "Mobile application not syncing data",
-        "VoIP phone system issues",
-        "VPN connection problems for remote employees",
-        "System updates causing compatibility issues",
-        "File server running out of storage space",
-        "Intrusion detection system alerts",
-        "Inventory management system errors",
-        "Customer data not loading in CRM",
-        "Collaboration tool not sending notifications",
+        "Complete homework", "Attend meeting", "Buy groceries", "Prepare for test", 
+    "Organize event", "Study for exam", "Clean the house", "Practice coding", 
+    "Complete project", "Finish reading book",
     ]
 
     # Generate the dataframe with 100 rows/tickets.
     data = {
-        "ID": [f"TASK-{i}" for i in range(1100, 1000, -1)],
+        "ID": [f"TASK-{i}" for i in range(1100, 1100- 100, -1)],
         "Task": np.random.choice(issue_descriptions, size=100),
         "Category": np.random.choice(["Academic", "Co-curricular", "Personal", "Other"], size=100),
         "Status": np.random.choice(["Open", "In Progress", "Closed"], size=100),
@@ -58,10 +44,17 @@ if "df" not in st.session_state:
             for _ in range(100)
         ],
         "Date Submitted": [
-            datetime.date(2025, 2, 22) + datetime.timedelta(days=random.randint(0, 182))
-            for _ in range(100)
+            # Generate Date Submitted as a random date before the corresponding Due Date
+        # We randomly choose a date between the base date and the Due Date
+        None for _ in range(100)  # Placeholder, we'll update this below
         ],
     }
+    # Now, populate the "Date Submitted" such that it is before the "Due Date"
+    for i in range(100):
+       due_date = data["Due Date"][i]
+       # Generate a random date before the Due Date (between 2025-02-22 and the Due Date)
+       date_submitted = datetime.date(2025, 2, 15) + datetime.timedelta(days=random.randint(0, (due_date - datetime.date(2025, 2, 15)).days))
+       data["Date Submitted"][i] = date_submitted
     df = pd.DataFrame(data)
 
     # Save the dataframe in session state (a dictionary-like object that persists across
