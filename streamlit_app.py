@@ -54,11 +54,11 @@ if "df" not in st.session_state:
         "Status": np.random.choice(["Open", "In Progress", "Closed"], size=100),
         "Priority": np.random.choice(["High", "Medium", "Low"], size=100),
         "Due Date": [
-            datetime.date(2023, 6, 1) + datetime.timedelta(days=random.randint(0, 182))
+            datetime.date(2025, 2, 22) + datetime.timedelta(days=random.randint(0, 182))
             for _ in range(100)
         ],
         "Date Submitted": [
-            datetime.date(2023, 6, 1) + datetime.timedelta(days=random.randint(0, 182))
+            datetime.date(2025, 2, 22) + datetime.timedelta(days=random.randint(0, 182))
             for _ in range(100)
         ],
     }
