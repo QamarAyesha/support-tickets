@@ -43,7 +43,7 @@ if "df" not in st.session_state:
         "Due Date": [
             (datetime.date(2025, 2, 23) + datetime.timedelta(days=random.randint(0, 182)))  # Fixing the issue with the 'Due Date'
             for _ in range(100),
-        ]
+        ],
         "Date Submitted": [None for _ in range(100)],  # Placeholder
     }
     # Now, populate the "Date Submitted" such that it is before the "Due Date"
