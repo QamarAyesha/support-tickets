@@ -130,6 +130,32 @@ edited_df = st.data_editor(
     disabled=["ID", "Date Submitted"],
 )
 
+# Show a chart of task priorities for each category
+st.header("Task Priorities by Category")
+
+# Loop over each category and display a chart for the task priorities in that category
+categories = st.session_state.df["Category"].unique()
+for category in categories:
+    st.subheader(f"Priority Distribution for {category} Tasks")
+    
+    # Filter the dataframe by the category
+    category_df = st.session_state.df[st.session_state.df["Category"] == category]
+    
+    # Create a bar chart for the priority distribution in this category
+    priority_plot = (
+        alt.Chart(category_df)
+        .mark_bar()
+        .encode(
+            x="Priority:N",  # Use the "Priority" column
+            y="count():Q",  # Count the number of tasks per priority
+            color="Priority:N",  # Color by priority
+        )
+        .properties(title=f"Task Priorities for {category}")
+        .configure_legend(
+            orient="bottom", titleFontSize=14, labelFontSize=14, titlePadding=5
+        )
+    )
+    st.altair_chart(priority_plot, use_container_width=True, theme="streamlit")
 # Show some metrics and charts about the ticket.
 st.header("Statistics")
 
