@@ -5,8 +5,7 @@ import altair as alt
 import numpy as np
 import pandas as pd
 import streamlit as st
-from datetime import datetime
-from datetime import timedelta
+
 
 # Show app title and description.
 st.set_page_config(page_title="Tasks", page_icon="🎫")
