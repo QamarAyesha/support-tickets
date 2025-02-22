@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 from datetime import datetime
+
 # Show app title and description.
 st.set_page_config(page_title="Tasks", page_icon="🎫")
 st.title("🎫 Add Task")
@@ -101,7 +102,7 @@ if submitted:
     )
 
     # Show a little success message.
-    st.write("Ticket submitted! Here are the ticket details:")
+    st.write("Task created! Here are your task priority list:")
     st.dataframe(df_new, use_container_width=True, hide_index=True)
     st.session_state.df = pd.concat([df_new, st.session_state.df], axis=0)
 
