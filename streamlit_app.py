@@ -143,7 +143,7 @@ categories = st.session_state.df["Category"].unique()
 for i, category in enumerate(categories):
     category_df = st.session_state.df[st.session_state.df["Category"] == category]
     
-    # Pie chart for the priority distribution in this category
+    # Pie chart for the priority distribution in this category (without legend)
     priority_plot = (
         alt.Chart(category_df)
         .mark_arc()
@@ -153,6 +153,9 @@ for i, category in enumerate(categories):
             tooltip=["Priority:N", "count():Q"]  # Show priority and count in the tooltip
         )
         .properties(title=f"Task Priorities for {category}")
+        .configure_legend(
+            disabled=True  # Disable legend for this individual pie chart
+        )
     )
 
     # Display each chart in a separate column
