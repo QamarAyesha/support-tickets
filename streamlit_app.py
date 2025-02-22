@@ -34,32 +34,29 @@ if "df" not in st.session_state:
 
     # Generate the dataframe with 100 rows/tickets.
     data = {
-        "ID": [f"TASK-{i}" for i in range(1100, 1100- 100, -1)],
+        "ID": [f"TASK-{i}" for i in range(1100, 1100 - 100, -1)],  # TASK-1100 to TASK-1001
         "Task": np.random.choice(issue_descriptions, size=100),
         "Category": np.random.choice(["Academic", "Co-curricular", "Personal", "Other"], size=100),
         "Status": np.random.choice(["Open", "In Progress", "Closed"], size=100),
         "Priority": np.random.choice(["High", "Medium", "Low"], size=100),
         "Due Date": [
-            datetime.date(2025, 2, 22) + datetime.timedelta(days=random.randint(0, 182))
+            (datetime.date(2025, 2, 22) + datetime.timedelta(days=random.randint(0, 182)))  # Fixing the issue with the 'Due Date'
             for _ in range(100)
         ],
-        "Date Submitted": [
-            # Generate Date Submitted as a random date before the corresponding Due Date
-        # We randomly choose a date between the base date and the Due Date
-        None for _ in range(100)  # Placeholder, we'll update this below
-        ],
+        "Date Submitted": [None for _ in range(100)],  # Placeholder
     }
     # Now, populate the "Date Submitted" such that it is before the "Due Date"
     for i in range(100):
-       due_date = data["Due Date"][i]
-       # Generate a random date before the Due Date (between 2025-02-22 and the Due Date)
-       date_submitted = datetime.date(2025, 2, 15) + datetime.timedelta(days=random.randint(0, (due_date - datetime.date(2025, 2, 15)).days))
-       data["Date Submitted"][i] = date_submitted
+        due_date = data["Due Date"][i]
+        # Generate Date Submitted to be before Due Date
+        date_submitted = datetime.date(2025, 2, 15) + datetime.timedelta(days=random.randint(0, (due_date - datetime.date(2025, 2, 15)).days))
+        data["Date Submitted"][i] = date_submitted
+
     df = pd.DataFrame(data)
 
-    # Save the dataframe in session state (a dictionary-like object that persists across
-    # page runs). This ensures our data is persisted when the app updates.
+    # Save the dataframe in session state (a dictionary-like object that persists across page runs).
     st.session_state.df = df
+    
 
 
 # Show a section to add a new ticket.
