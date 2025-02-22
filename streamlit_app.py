@@ -47,8 +47,9 @@ if "df" not in st.session_state:
 
     # Generate the dataframe with 100 rows/tickets.
     data = {
-        "ID": [f"TICKET-{i}" for i in range(1100, 1000, -1)],
-        "Issue": np.random.choice(issue_descriptions, size=100),
+        "ID": [f"Task-{i}" for i in range(1100, 1000, -1)],
+        "Task": np.random.choice(issue_descriptions, size=100),
+        "Category": np.random.choice(["Academic", "Co-curricular", "Personal", "Other"], size=100)
         "Status": np.random.choice(["Open", "In Progress", "Closed"], size=100),
         "Priority": np.random.choice(["High", "Medium", "Low"], size=100),
         "Date Submitted": [
@@ -70,6 +71,7 @@ st.header("Add a ticket")
 # in a form, the app will only rerun once the submit button is pressed.
 with st.form("add_task_form"):
     issue = st.text_area("Describe the task")
+    category= st.selectbox("Category", ["Academic", "Co-curricular", "Personal", "Other"])
     priority = st.selectbox("Priority", ["High", "Medium", "Low"])
     submitted = st.form_submit_button("Submit")
 
@@ -83,6 +85,7 @@ if submitted:
             {
                 "ID": f"TICKET-{recent_ticket_number+1}",
                 "Issue": issue,
+                "Category": category,
                 "Status": "Open",
                 "Priority": priority,
                 "Date Submitted": today,
@@ -96,11 +99,11 @@ if submitted:
     st.session_state.df = pd.concat([df_new, st.session_state.df], axis=0)
 
 # Show section to view and edit existing tickets in a table.
-st.header("Existing tickets")
-st.write(f"Number of tickets: `{len(st.session_state.df)}`")
+st.header("Existing Tasks")
+st.write(f"Number of Tasks: `{len(st.session_state.df)}`")
 
 st.info(
-    "You can edit the tickets by double clicking on a cell. Note how the plots below "
+    "You can edit the task by double clicking on a cell. Note how the plots below "
     "update automatically! You can also sort the table by clicking on the column headers.",
     icon="✍️",
 )
