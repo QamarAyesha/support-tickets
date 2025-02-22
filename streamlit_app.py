@@ -145,18 +145,18 @@ st.header("Statistics")
 # Show metrics side by side using `st.columns` and `st.metric`.
 col1, col2, col3 = st.columns(3)
 num_open_tickets = len(st.session_state.df[st.session_state.df.Status == "Open"])
-col1.metric(label="Number of open tickets", value=num_open_tickets, delta=10)
+col1.metric(label="Number of open tasks", value=num_open_tickets, delta=10)
 col2.metric(label="First response time (hours)", value=5.2, delta=-1.5)
 col3.metric(label="Average resolution time (hours)", value=16, delta=2)
 
 # Show two Altair charts using `st.altair_chart`.
 st.write("")
-st.write("##### Ticket status per month")
+st.write("##### Task due per month")
 status_plot = (
     alt.Chart(edited_df)
     .mark_bar()
     .encode(
-        x="month(Date Submitted):O",
+        x="month(Due Date):O",
         y="count():Q",
         xOffset="Status:N",
         color="Status:N",
@@ -167,7 +167,7 @@ status_plot = (
 )
 st.altair_chart(status_plot, use_container_width=True, theme="streamlit")
 
-st.write("##### Current ticket priorities")
+st.write("##### Current task priorities")
 priority_plot = (
     alt.Chart(edited_df)
     .mark_arc()
