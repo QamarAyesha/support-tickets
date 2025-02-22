@@ -49,7 +49,7 @@ if "df" not in st.session_state:
     data = {
         "ID": [f"Task-{i}" for i in range(1100, 1000, -1)],
         "Task": np.random.choice(issue_descriptions, size=100),
-        "Category": np.random.choice(["Academic", "Co-curricular", "Personal", "Other"], size=100)
+        "Category": np.random.choice(["Academic", "Co-curricular", "Personal", "Other"], size=100),
         "Status": np.random.choice(["Open", "In Progress", "Closed"], size=100),
         "Priority": np.random.choice(["High", "Medium", "Low"], size=100),
         "Date Submitted": [
