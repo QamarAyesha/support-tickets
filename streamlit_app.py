@@ -149,13 +149,10 @@ for i, category in enumerate(categories):
         .mark_arc()
         .encode(
             theta="count():Q",  # Count the number of tasks per priority
-            color="Priority:N",  # Color by priority
+            color=alt.Color("Priority:N", legend=None),  # Disable legend for this individual pie chart
             tooltip=["Priority:N", "count():Q"]  # Show priority and count in the tooltip
         )
         .properties(title=f"Task Priorities for {category}")
-        .configure_legend(
-            disabled=True  # Disable legend for this individual pie chart
-        )
     )
 
     # Display each chart in a separate column
@@ -175,7 +172,7 @@ priority_combined_plot = (
     .mark_arc()
     .encode(
         theta="count():Q",  # Count the number of tasks per priority
-        color="Priority:N",  # Color by priority
+        color=alt.Color("Priority:N"),  # Enable legend for the combined chart
         tooltip=["Priority:N", "count():Q"]  # Show priority and count in the tooltip
     )
     .properties(height=200)
